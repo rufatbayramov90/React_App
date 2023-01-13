@@ -8,6 +8,8 @@ function App({text,age}) {
     age:26,
     qrup:"2.1"
   });
+  const[second,setSecond]=useState(0);
+  const[start,setStart]=useState(false);
   const changeName =()=>{
     setStudent({
       ...student,
@@ -15,10 +17,18 @@ function App({text,age}) {
       age:22
     })
   }
+  const runTimer =()=>{
+   setStart(!start)
+  }
   useEffect(()=>{
-    console.log("useEffecte daxil oldu ")
+    if(!start){
+      return;
+    }
+    const timer = setInterval(()=>{
+      setSecond(second + 1)
+    },1000);
     return ()=>{
-      console.log("return hisseye daxil oldu")
+      clearInterval(timer);
     }
   })
  
@@ -28,6 +38,9 @@ function App({text,age}) {
       <h3>{student.age}</h3>
       <h2>{student.name}</h2>
       <button onClick={changeName}>Change Name</button>
+    
+      <p>{second}</p>
+      <button onClick={runTimer}>{start ? "Stop" : "Start"} Time</button>
     </div>
   );
 }
